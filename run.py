@@ -2,30 +2,28 @@ import os
 import pandas as pd
 distRoot = "./dist/"
 
-sourcePath = ''
+sourcePath = './source.csv'
 
-source = pd.read_csv(sourcePath, header=1)
+source = pd.read_csv(sourcePath)
 
 print(source)
 
 # make departments
 for index, row in source.iterrows():
-    employeeFolder = './dist/'+row['Department'][2:].strip()+'/'
-    print(employeeFolder)
+    employeeFolder = './dist/'+row['Department'].strip()+'/'
     if not os.path.isdir(employeeFolder):
+        print(employeeFolder)
         os.mkdir(employeeFolder)
 
 for index, row in source.iterrows():
-    employeeFolder = './dist/'+row['Department'][2:].strip()+'/'+ row['Column1'].strip()+'/'
+    employeeFolder = './dist/'+row['Department'].strip()+'/'+ row['Forename'].strip() + " " +row['Surname'].strip()+'/'
     if not os.path.isdir(employeeFolder):
         os.mkdir(employeeFolder)
 
-for index, row in source.iterrows():
-    employeeFolder = './dist/'+row['Department'][2:].strip()+'/'+ row['Column1'].strip()+'/1. Contract/'
-    if not os.path.isdir(employeeFolder):
-        os.mkdir(employeeFolder)
+folders = ['folder1', 'folder2', 'folder3']
 
 for index, row in source.iterrows():
-    employeeFolder = './dist/'+row['Department'][2:].strip()+'/'+ row['Column1'].strip()+'/2. Training/'
-    if not os.path.isdir(employeeFolder):
-        os.mkdir(employeeFolder)
+    for folder in folders:
+        employeeFolder = './dist/'+row['Department'].strip()+'/'+ row['Forename'].strip() + " " +row['Surname'].strip()+'/'+folder+'/'
+        if not os.path.isdir(employeeFolder):
+            os.mkdir(employeeFolder)
